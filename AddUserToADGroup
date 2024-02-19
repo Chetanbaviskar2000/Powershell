@@ -1,1 +1,10 @@
 #Developer 
+# Install and connect to Exchange Online PowerShell module
+Install-Module -Name ExchangeOnlineManagement -Force -AllowClobber
+Connect-ExchangeOnline -UserPrincipalName admin@yourdomain.com -ShowProgress $true
+ 
+# Replace "user@yourdomain.com" with the user's UPN
+$userUPN = "user@yourdomain.com"
+ 
+# Enable mailbox for the user
+Enable-Mailbox -Identity $userUPN
