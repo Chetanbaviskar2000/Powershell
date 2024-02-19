@@ -1,0 +1,31 @@
+There is a sharepoint site you need to find out the users accessing the site along with their username and email ID and export these details in csv file.
+
+#Import SharePoint Online Management 
+Import-Module Microsoft.Online.Sharepoint.PowerShell -DisableNameChecking
+#Variables for processing
+$AdminURL = "https://chetan-admin.sharepoint.com/"
+$AdminName = "chetanadmin@crescent.com"
+$SiteURL="https://chetan.sharepoint.com/sites/sales"
+#User Names Password to connect 
+$Password = Read-host -assecurestring "Enter Password for $AdminName"
+$Credential = new-object -typename System.Management.Automation.PSCredential -argumentlist $AdminName, $Password
+#Connect to SharePoint Online
+Connect-SPOService -url $AdminURL -credential $Credential
+#get all sharepoint online groups
+$SiteGroups = Get-SPOSiteGroup -Site $SiteURL
+#Get Members of each group
+foreach($Group in $SiteGroups)
+{
+    Write-host "Group:"$Group.Title
+    Get-SPOSiteGroup -Site $SiteURL -Group $Group.Title | Select-Object -ExpandProperty Users
+ 
+ 
+	
+Get-SPOUser -Site $siteURL | select DisplayName, LoginName | Where { $_.LoginName -like "*@crescent.com"}
+ 
+#Get All users of the site collections and their Groups
+Get-SPOUser -Site "https://Chetan.sharepoint.com/sites/sales" | ForEach-Object { 
+   $_.LoginName + "`t" + $_.DisplayName+ "`t" + ($_.Groups -join ",") | Out-File "C:\Temp\UsersRpt.csv" -Force -Append
+}
+ 
+Disconnect-SPOService
