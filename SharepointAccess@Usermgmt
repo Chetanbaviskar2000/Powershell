@@ -1,4 +1,4 @@
-There is a sharepoint site you need to find out the users accessing the site along with their username and email ID and export these details in csv file.
+.There is a sharepoint site you need to find out the users accessing the site along with their username and email ID and export these details in csv file.
 
 #Import SharePoint Online Management 
 Import-Module Microsoft.Online.Sharepoint.PowerShell -DisableNameChecking
